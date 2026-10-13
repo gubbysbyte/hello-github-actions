@@ -1,0 +1,35 @@
+name: Node.js CI
+
+# 1. The Event: When should this run?
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# 2. The Jobs: What should happen?
+jobs: 
+  build:
+    # 3. The Runner: Where should it run?
+    runs-on: ubuntu-latest
+
+    # 4. The Steps: What should it do?
+    steps:
+    # Step A: Get the code from the repository
+    - uses: actions/checkout@v3
+
+    # Step B: Install a specific version of Node.js
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+
+    # Step C: Install dependencies
+    - name: Install dependencies
+      run: npm ci
+
+    # Step D: Run the tests
+    - name: Run tests
+      run: npm test
+
